@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\auth\Login;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -12,7 +12,7 @@ class LoginController extends Controller
     {
         return response()->json([
             'status' => false,
-            'message' => 'Akses tidak diizinkan'
+            'message' => 'Akses tidak diizinkan',
         ], 401);
     }
 
@@ -23,19 +23,20 @@ class LoginController extends Controller
 
         if ($isAuthenticate) {
             $token = $isAuthenticate->createToken('authToken')->plainTextToken;
+
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil login',
                 'data' => [
                     'user' => $isAuthenticate,
-                    'token' => $token
-                ]
+                    'token' => $token,
+                ],
             ], 200);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Username atau password salah'
+            'message' => 'Username atau password salah',
         ], 401);
     }
 }

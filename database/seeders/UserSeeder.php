@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -31,7 +30,7 @@ class UserSeeder extends Seeder
                 'username' => 'penjaga_2',
                 'password' => 'penjaga_2',
                 'level' => 0,
-            ]
+            ],
         ])->each(function ($user) {
             User::create($user);
         });
