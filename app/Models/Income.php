@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Income extends Model
 {
     use HasFactory;
+
     protected $table = 'income';
+
     protected $fillable = [
         'kos_id',
         'bulan',
         'tahun',
-        'total'
+        'total',
     ];
 }

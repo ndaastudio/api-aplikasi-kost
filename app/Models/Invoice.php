@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+
     protected $table = 'invoice';
+
     protected $fillable = [
         'order_id',
         'tanggal',
         'jumlah',
-        'bukti'
+        'bukti',
     ];
 }

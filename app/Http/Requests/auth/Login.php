@@ -23,7 +23,7 @@ class Login extends FormRequest
     {
         return [
             'username' => ['required', 'min:3', 'max:16', 'alpha_dash'],
-            'password' => ['required', 'min:8', 'max:16']
+            'password' => ['required', 'min:8', 'max:16'],
         ];
     }
 

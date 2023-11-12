@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\auth\Register;
+use App\Models\User;
 
 class RegisterController extends Controller
 {
@@ -17,13 +17,13 @@ class RegisterController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil membuat akun',
-                'data' => $isRegistered
+                'data' => $isRegistered,
             ], 201);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'Terjadi kesalahan pada database atau server'
+            'message' => 'Terjadi kesalahan pada database atau server',
         ], 400);
     }
 }

@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Identitas extends Model
 {
     use HasFactory;
+
     protected $table = 'identitas';
+
     protected $fillable = [
         'user_id',
         'nama',
         'telepon',
-        'whatsapp'
+        'whatsapp',
     ];
 }
