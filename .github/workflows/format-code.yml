@@ -8,7 +8,7 @@ on:
 
 jobs:
   format-code:
-    name: "format code"
+    name: "Format code"
     runs-on: ubuntu-latest
 
     permissions:

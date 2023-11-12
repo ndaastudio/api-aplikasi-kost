@@ -1,4 +1,4 @@
-name: "merge conflict finder"
+name: "Merge Conflict Finder"
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   merge-conflict-finder:
     runs-on: ubuntu-latest
-    name: "Find merge conflicts"
+    name: "Merge conflict finder"
     steps:
       # Checkout the source code so there are some files to look at.
       - uses: actions/checkout@v3

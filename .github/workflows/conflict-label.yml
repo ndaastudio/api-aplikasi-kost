@@ -1,4 +1,4 @@
-name: "merge conflict auto label"
+name: "Merge Conflict Auto Label"
 
 on:
   push:
