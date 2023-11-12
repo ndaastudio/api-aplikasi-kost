@@ -34,4 +34,4 @@ jobs:
         run: chmod -R 755 storage bootstrap/cache
 
       - name: Larastan
-        run: ./vendor/bin/phpstan analyse --xdebug
+        run: ./vendor/bin/phpstan analyse app/Http app/Models resources/views routes/api.php
