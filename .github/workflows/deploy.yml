@@ -18,4 +18,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
           script: "cd ~/src-api-aplikasi-kost && ./.scripts/deploy.sh"
