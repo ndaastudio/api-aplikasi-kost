@@ -66,6 +66,10 @@ class User extends Authenticatable
             'level' => $data['level'],
         ]);
 
-        return $user;
+        if ($user) {
+            return true;
+        }
+
+        return false;
     }
 }
