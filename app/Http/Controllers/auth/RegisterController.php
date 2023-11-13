@@ -17,7 +17,6 @@ class RegisterController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil membuat akun',
-                'data' => $isRegistered,
             ], 201);
         }
 
