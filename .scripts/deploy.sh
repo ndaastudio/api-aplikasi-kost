@@ -6,9 +6,6 @@ echo "Deployment started..."
 # Enter maintenance mode or return true
 # (php artisan down) || true
 
-# Change to the project directory. 
-cd ~/home/plazainf/src-api-aplikasi-kost
-
 # Pull the latest version of the app
 git pull origin dev --force
 

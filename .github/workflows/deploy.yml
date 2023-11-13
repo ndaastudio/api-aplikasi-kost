@@ -7,13 +7,15 @@ on:
 # Authenticate to the the server via ssh
 # and run deployment script
 jobs:
-  tests:
+  deploy:
     runs-on: ubuntu-latest
-    name: Build & Deploy Assets
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Deploy
-        run: |
-          ssh syncflux@${{ secrets.SERVER_IP }} 'bash -s' < ./.scripts/deploy.sh
+      - uses: actions/checkout@v3
+      - name: deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: "cd ~/src-api-aplikasi-kost && ./.scripts/deploy.sh"
