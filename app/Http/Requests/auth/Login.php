@@ -24,6 +24,8 @@ class Login extends FormRequest
         return [
             'username' => ['required', 'min:3', 'max:16', 'alpha_dash'],
             'password' => ['required', 'min:8', 'max:16'],
+            'version' => ['required', 'string'],
+            'konfirmasi_login' => ['required', 'integer', 'in:1,0'],
         ];
     }
 
@@ -43,6 +45,13 @@ class Login extends FormRequest
             'password.required' => 'Password tidak boleh kosong',
             'password.min' => 'Password minimal :min karakter',
             'password.max' => 'Password maksimal :max karakter',
+
+            'version.required' => 'Versi tidak boleh kosong',
+            'version.string' => 'Versi harus berupa string',
+
+            'konfirmasi_login.required' => 'Konfirmasi login tidak boleh kosong',
+            'konfirmasi_login.integer' => 'Konfirmasi login harus berupa angka',
+            'konfirmasi_login.in' => 'Konfirmasi login harus bernilai 1 atau 0',
         ];
     }
 }
