@@ -44,12 +44,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function login($username, $password)
+    public function login($data)
     {
-        $user = $this->where('username', $username)->first();
+        $user = $this->where('username', $data['username'])->first();
 
         if ($user) {
-            if (Hash::check($password, $user->password)) {
+            if (Hash::check($data['password'], $user->password)) {
                 return $user;
             }
         }
@@ -66,10 +66,6 @@ class User extends Authenticatable
             'level' => $data['level'],
         ]);
 
-        if ($user) {
-            return true;
-        }
-
-        return false;
+        return $user;
     }
 }
