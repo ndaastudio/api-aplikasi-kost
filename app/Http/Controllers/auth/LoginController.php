@@ -4,6 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\auth\Login;
+use App\Http\Requests\auth\Logout;
 use App\Models\User;
 
 class LoginController extends Controller
@@ -67,6 +68,26 @@ class LoginController extends Controller
                 'status' => false,
                 'message' => [
                     'error' => 'Kombinasi username dan password yang Anda masukkan salah!',
+                ],
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
+
+    public function logout(Logout $request)
+    {
+        $user = new User();
+        $isLoggedOut = $user->logout($request->all());
+
+        if ($isLoggedOut) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Berhasil logout!',
                 ],
             ]);
         }

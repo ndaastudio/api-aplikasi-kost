@@ -66,6 +66,15 @@ class User extends Authenticatable
             'level' => $data['level'],
         ]);
 
-        return $user;
+    public function logout($data)
+    {
+        $user = $this->where('username', $data['username'])->first();
+
+        if ($user) {
+            $user->tokens()->where('name', $user->username)->delete();
+            return true;
+        }
+
+        return false;
     }
 }

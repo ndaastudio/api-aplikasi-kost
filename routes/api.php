@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/', [LoginController::class, 'index'])->name('login');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/register', [RegisterController::class, 'createAkunPenjaga']);
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/register', [RegisterController::class, 'createAkunPenjaga']);
