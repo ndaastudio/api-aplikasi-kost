@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\auth\LoginController;
-use App\Http\Controllers\auth\RegisterController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/', function () {
+    return response()->json([
+        'status' => false,
+        'message' => 'Akses tidak diizinkan',
+    ], 401);
+})->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/register', [RegisterController::class, 'createAkunPenjaga']);
-    Route::post('/logout', [LoginController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/users', [UserController::class, 'getAll']);
+    Route::get('/user/{id}', [UserController::class, 'getById']);
+    Route::post('/user', [UserController::class, 'create']);
 });
 
-Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/login', [AuthController::class, 'login']);
