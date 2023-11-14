@@ -1,23 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Http\Requests\auth\Login;
 use App\Http\Requests\auth\Logout;
-use App\Models\User;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
-    public function index()
-    {
-        return response()->json([
-            'status' => false,
-            'message' => 'Akses tidak diizinkan',
-        ], 401);
-    }
-
-    public function authenticate(Login $request)
+    public function login(Login $request)
     {
         $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
 
@@ -34,7 +25,7 @@ class LoginController extends Controller
         }
 
         $user = new User();
-        $isAuthenticate = $user->login($request->all());
+        $isAuthenticate = $user->loginUser($request->all());
 
         if ($isAuthenticate) {
             $userToken = $isAuthenticate->tokens()->where('name', $isAuthenticate->username)->first();
@@ -81,7 +72,7 @@ class LoginController extends Controller
     public function logout(Logout $request)
     {
         $user = new User();
-        $isLoggedOut = $user->logout($request->all());
+        $isLoggedOut = $user->logoutUser($request->all());
 
         if ($isLoggedOut) {
             return response()->json([
