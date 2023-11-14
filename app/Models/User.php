@@ -44,7 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function login($data)
+    public function loginUser($data)
     {
         $user = $this->where('username', $data['username'])->first();
 
@@ -57,17 +57,7 @@ class User extends Authenticatable
         return false;
     }
 
-    public function register($data)
-    {
-        return $this->create([
-            'kos_id' => $data['kos_id'],
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'level' => $data['level'],
-        ]);
-    }
-
-    public function logout($data)
+    public function logoutUser($data)
     {
         $user = $this->where('username', $data['username'])->first();
 
@@ -77,5 +67,14 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function createUser($data)
+    {
+        return $this->create([
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'level' => $data['level'],
+        ]);
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Identitas;
 use App\Models\Kos;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Kos::factory(2)->create();
+
+        Identitas::factory(3)->create();
 
         $this->call(UserSeeder::class);
     }

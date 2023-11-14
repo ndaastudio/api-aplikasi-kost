@@ -17,4 +17,16 @@ class Identitas extends Model
         'telepon',
         'whatsapp',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function createIdentitas($userId)
+    {
+        return $this->create([
+            'user_id' => $userId,
+        ]);
+    }
 }
