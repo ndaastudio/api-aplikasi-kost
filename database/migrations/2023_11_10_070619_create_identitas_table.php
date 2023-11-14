@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('identitas', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('nama');
-            $table->string('telepon');
-            $table->string('whatsapp');
+            $table->string('nama')->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('whatsapp')->nullable();
             $table->timestamps();
         });
     }
