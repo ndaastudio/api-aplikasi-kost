@@ -3,11 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -59,12 +59,13 @@ class User extends Authenticatable
 
     public function register($data)
     {
-        $user = $this->create([
+        return $this->create([
             'kos_id' => $data['kos_id'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'level' => $data['level'],
         ]);
+    }
 
     public function logout($data)
     {
