@@ -28,10 +28,10 @@ class AuthController extends Controller
         $user = new User();
         $identitas = new Identitas();
         $isAuthenticate = $user->loginUser($request->all());
-        $userData = $identitas->with('user')->where('user_id', $isAuthenticate->id)->first();
 
         if ($isAuthenticate) {
             $userToken = $isAuthenticate->tokens()->where('name', $isAuthenticate->username)->first();
+            $userData = $identitas->getUserByIdWithIdentitas($isAuthenticate->id);
 
             if (!$userToken) {
                 $userToken = $isAuthenticate->createToken($isAuthenticate->username)->plainTextToken;
@@ -81,6 +81,13 @@ class AuthController extends Controller
                 'message' => [
                     'success' => 'Berhasil logout!',
                 ],
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Sesi login tidak ditemukan!',
+                ]
             ]);
         }
 
