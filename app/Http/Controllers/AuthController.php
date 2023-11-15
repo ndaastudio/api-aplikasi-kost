@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\auth\Login;
 use App\Http\Requests\auth\Logout;
+use App\Models\Identitas;
 
 class AuthController extends Controller
 {
@@ -25,7 +26,9 @@ class AuthController extends Controller
         }
 
         $user = new User();
+        $identitas = new Identitas();
         $isAuthenticate = $user->loginUser($request->all());
+        $userData = $identitas->with('user')->where('user_id', $isAuthenticate->id)->first();
 
         if ($isAuthenticate) {
             $userToken = $isAuthenticate->tokens()->where('name', $isAuthenticate->username)->first();
@@ -49,10 +52,8 @@ class AuthController extends Controller
                 'message' => [
                     'success' => 'Berhasil login!',
                 ],
-                'data' => [
-                    'user' => $isAuthenticate,
-                    'token' => $userToken,
-                ]
+                'data' => $userData,
+                'token' => $userToken,
             ]);
         } else {
             return response()->json([
