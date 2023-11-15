@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoice', function (Blueprint $table) {
+        Schema::create('income', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Order::class);
-            $table->dateTime('tanggal');
-            $table->integer('jumlah');
-            $table->string('bukti');
+            $table->foreignId('kos_id')->constrained('kos')->cascadeOnDelete();
+            $table->integer('bulan');
+            $table->integer('tahun');
+            $table->float('total');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoice');
+        Schema::dropIfExists('income');
     }
 };

@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
 
         Kos::factory(2)->create();
 
-        Identitas::factory(3)->create();
-
         $this->call(UserSeeder::class);
+
+        Identitas::factory(3)->create();
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Fasilitas;
-use App\Models\Kamar;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fasilitas_kamar', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Kamar::class);
-            $table->foreignIdFor(Fasilitas::class);
-            $table->integer('jumlah');
-            $table->string('keterangan');
+            $table->foreignId('kos_id')->nullable()->constrained('kos')->nullOnDelete();
+            $table->string('username')->unique();
+            $table->string('password');
+            $table->integer('level')->default(0);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fasilitas_kamar');
+        Schema::dropIfExists('users');
     }
 };

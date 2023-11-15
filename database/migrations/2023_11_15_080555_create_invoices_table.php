@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('identitas', function (Blueprint $table) {
+        Schema::create('invoice', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->string('nama')->nullable();
-            $table->string('telepon')->nullable();
-            $table->string('whatsapp')->nullable();
+            $table->foreignId('order_id')->constrained('order')->cascadeOnDelete();
+            $table->dateTime('tanggal');
+            $table->integer('jumlah');
+            $table->string('bukti');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('identitas');
+        Schema::dropIfExists('invoice');
     }
 };

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Kos;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('income', function (Blueprint $table) {
+        Schema::create('kamar', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Kos::class);
-            $table->integer('bulan');
-            $table->integer('tahun');
-            $table->float('total');
+            $table->foreignId('kos_id')->constrained('kos')->cascadeOnDelete();
+            $table->string('nama_kamar');
+            $table->integer('status');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income');
+        Schema::dropIfExists('kamar');
     }
 };
