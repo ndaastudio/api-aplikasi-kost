@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Identitas as IdentitasRequest;
 use App\Models\User;
 use App\Models\Identitas;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,7 @@ class UserController extends Controller
     public function getAll()
     {
         $identitas = new Identitas();
-        $users = $identitas->with('user')->get();
+        $users = $identitas->getAllUserWithIdentitas();
 
         if ($users->count() > 0) {
             return response()->json([
@@ -66,7 +67,7 @@ class UserController extends Controller
     public function getById(string $id)
     {
         $identitas = new Identitas();
-        $user = $identitas->with('user')->where('user_id', $id)->first();
+        $user = $identitas->getUserByIdWithIdentitas($id);
 
         if ($user) {
             return response()->json([
@@ -75,6 +76,60 @@ class UserController extends Controller
                     'success' => 'Data ditemukan!',
                 ],
                 'data' => $user,
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Data tidak ditemukan!',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
+
+    public function deleteById(string $id)
+    {
+        $user = new User();
+        $isDeleted = $user->deleteUserById($id);
+
+        if ($isDeleted) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Berhasil menghapus akun!',
+                ],
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Akun tidak ditemukan!',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
+
+    public function editIdentitasByUserId(IdentitasRequest $request, string $id)
+    {
+        $identitas = new Identitas();
+        $isUpdated = $identitas->editIdentitas($request->all(), $id);
+
+        if ($isUpdated) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Berhasil mengubah data!',
+                ],
             ]);
         } else {
             return response()->json([

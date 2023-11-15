@@ -61,12 +61,7 @@ class User extends Authenticatable
     {
         $user = $this->where('username', $data['username'])->first();
 
-        if ($user) {
-            $user->tokens()->where('name', $user->username)->delete();
-            return true;
-        }
-
-        return false;
+        return $user->tokens()->where('name', $user->username)->delete();
     }
 
     public function createUser($data)
@@ -76,5 +71,10 @@ class User extends Authenticatable
             'password' => Hash::make($data['password']),
             'level' => $data['level'],
         ]);
+    }
+
+    public function deleteUserById($id)
+    {
+        return $this->where('id', $id)->delete();
     }
 }
