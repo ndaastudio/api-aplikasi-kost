@@ -70,24 +70,16 @@ class AuthController extends Controller
         ], 500);
     }
 
-    public function logout(Logout $request)
+    public function logout(LogoutRequest $request, User $user)
     {
-        $user = new User();
-        $isLoggedOut = $user->logoutUser($request->all());
+        $isLoggedOut = $user->logout($request->id);
 
         if ($isLoggedOut) {
             return response()->json([
                 'status' => true,
                 'message' => [
-                    'success' => 'Berhasil logout!',
+                    'success' => 'Logout berhasil',
                 ],
-            ]);
-        } else {
-            return response()->json([
-                'status' => false,
-                'message' => [
-                    'error' => 'Sesi login tidak ditemukan!',
-                ]
             ]);
         }
 

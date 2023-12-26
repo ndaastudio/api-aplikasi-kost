@@ -57,9 +57,9 @@ class User extends Authenticatable
         return false;
     }
 
-    public function logoutUser($data)
+    public function logout($id): bool
     {
-        $user = $this->where('username', $data['username'])->first();
+        $user = $this->where('id', $id)->first();
 
         return $user->tokens()->where('name', $user->username)->delete();
     }
