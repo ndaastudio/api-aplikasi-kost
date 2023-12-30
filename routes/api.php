@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,17 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/users', [UserController::class, 'getAll']);
     Route::get('/user/{id}', [UserController::class, 'getById']);
     Route::delete('/user/{id}', [UserController::class, 'deleteById']);
     Route::post('/user', [UserController::class, 'create']);
     Route::put('/user/{id}', [UserController::class, 'editIdentitasByUserId']);
+
+    Route::get('/kos', [KosController::class, 'getAll']);
+    Route::get('/kos/{id}', [KosController::class, 'getById']);
+    Route::post('/kos', [KosController::class, 'create']);
+    Route::delete('/kos/{id}', [KosController::class, 'deleteById']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

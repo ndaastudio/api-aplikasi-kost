@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\auth\Login;
-use App\Http\Requests\auth\Logout;
+use App\Http\Requests\auth\LoginRequest;
+use App\Http\Requests\auth\LogoutRequest;
 use App\Models\Identitas;
 
 class AuthController extends Controller
 {
-    public function login(Login $request)
+    public function login(LoginRequest $request, User $user, Identitas $identitas)
     {
         $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
 
@@ -25,13 +25,11 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = new User();
-        $identitas = new Identitas();
-        $isAuthenticate = $user->loginUser($request->all());
+        $isAuthenticate = $user->login($request->all());
 
         if ($isAuthenticate) {
             $userToken = $isAuthenticate->tokens()->where('name', $isAuthenticate->username)->first();
-            $userData = $identitas->getUserByIdWithIdentitas($isAuthenticate->id);
+            $userData = $identitas->showByUserId($isAuthenticate->id);
 
             if (!$userToken) {
                 $userToken = $isAuthenticate->createToken($isAuthenticate->username)->plainTextToken;
@@ -50,7 +48,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => [
-                    'success' => 'Berhasil login!',
+                    'success' => 'Login berhasil',
                 ],
                 'data' => $userData,
                 'token' => $userToken,
@@ -79,6 +77,13 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => [
                     'success' => 'Logout berhasil',
+                ],
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Logout gagal, sesi tidak ditemukan',
                 ],
             ]);
         }

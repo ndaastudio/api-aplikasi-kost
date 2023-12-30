@@ -2,48 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IdentitasRequest;
-use App\Models\User;
-use App\Models\Identitas;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\KosRequest;
+use App\Models\Kos;
 
-class UserController extends Controller
+class KosController extends Controller
 {
-    public function create(UserRequest $request, User $user, Identitas $identitas)
+    public function getAll(Kos $kos)
     {
-        try {
-            DB::beginTransaction();
-            $isCreatedUser = $user->register($request->all());
-            $identitas->store($isCreatedUser->id);
-            DB::commit();
+        $kosData = $kos->showAll();
 
-            return response()->json([
-                'status' => true,
-                'message' => [
-                    'success' => 'Akun berhasil dibuat',
-                ]
-            ]);
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function getAll(Identitas $identitas)
-    {
-        $users = $identitas->showAllUser();
-
-        if ($users->count() > 0) {
+        if ($kosData->count() > 0) {
             return response()->json([
                 'status' => true,
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $users,
+                'data' => $kosData
             ]);
         } else {
             return response()->json([
@@ -60,17 +34,17 @@ class UserController extends Controller
         ], 500);
     }
 
-    public function getById(Identitas $identitas, string $id)
+    public function getById(Kos $kos, $id)
     {
-        $user = $identitas->showByUserId($id);
+        $kosData = $kos->showById($id);
 
-        if ($user) {
+        if ($kosData) {
             return response()->json([
                 'status' => true,
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $user,
+                'data' => $kosData
             ]);
         } else {
             return response()->json([
@@ -87,22 +61,22 @@ class UserController extends Controller
         ], 500);
     }
 
-    public function deleteById(User $user, string $id)
+    public function create(KosRequest $request, Kos $kos)
     {
-        $isDeleted = $user->destroyById($id);
+        $isCreatedKos = $kos->store($request->all());
 
-        if ($isDeleted) {
+        if ($isCreatedKos) {
             return response()->json([
                 'status' => true,
                 'message' => [
-                    'success' => 'Data berhasil dihapus',
-                ],
+                    'success' => 'Kos berhasil ditambahkan',
+                ]
             ]);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => [
-                    'error' => 'Data tidak ditemukan',
+                    'error' => 'Kos gagal ditambahkan',
                 ]
             ]);
         }
@@ -113,16 +87,16 @@ class UserController extends Controller
         ], 500);
     }
 
-    public function editIdentitasByUserId(IdentitasRequest $request, Identitas $identitas, string $id)
+    public function deleteById(Kos $kos, string $id)
     {
-        $isUpdated = $identitas->updateByUserId($request->all(), $id);
+        $isDeletedKos = $kos->destroyById($id);
 
-        if ($isUpdated) {
+        if ($isDeletedKos) {
             return response()->json([
                 'status' => true,
                 'message' => [
-                    'success' => 'Data berhasil diubah',
-                ],
+                    'success' => 'Kos berhasil dihapus',
+                ]
             ]);
         } else {
             return response()->json([

@@ -44,7 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function loginUser($data)
+    public function login($data): object|bool
     {
         $user = $this->where('username', $data['username'])->first();
 
@@ -64,7 +64,7 @@ class User extends Authenticatable
         return $user->tokens()->where('name', $user->username)->delete();
     }
 
-    public function createUser($data)
+    public function register($data): object
     {
         return $this->create([
             'username' => $data['username'],
@@ -73,8 +73,16 @@ class User extends Authenticatable
         ]);
     }
 
-    public function deleteUserById($id)
+    public function destroyById($id): bool
     {
-        return $this->where('id', $id)->delete();
+        $user = $this->where('id', $id)->first();
+
+        if (!$user) {
+            return false;
+        }
+
+        $user->tokens()->where('name', $user->username)->delete();
+
+        return $user->delete();
     }
 }

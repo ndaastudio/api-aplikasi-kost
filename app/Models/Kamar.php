@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Fasilitas;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Kamar extends Model
 {
@@ -16,4 +18,14 @@ class Kamar extends Model
         'nama_kamar',
         'status',
     ];
+
+    public function fasilitas(): HasMany
+    {
+        return $this->hasMany(Fasilitas::class);
+    }
+
+    public function showByKosId($kosId): object
+    {
+        return $this->where('kos_id', $kosId)->get();
+    }
 }

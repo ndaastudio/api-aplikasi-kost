@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Identitas;
+use App\Models\Kamar;
 use App\Models\Kos;
 use Illuminate\Database\Seeder;
 
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Kos::factory(2)->create();
+        Kos::factory(5)->create();
 
         $this->call(UserSeeder::class);
 
