@@ -34,7 +34,7 @@ class KosController extends Controller
         ], 500);
     }
 
-    public function getById(Kos $kos, $id)
+    public function getById(Kos $kos, string $id)
     {
         $kosData = $kos->showById($id);
 

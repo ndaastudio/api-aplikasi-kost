@@ -6,9 +6,9 @@ use App\Models\Kamar;
 
 class KamarController extends Controller
 {
-    public function getByKosId(Kamar $kamar, string $id)
+    public function getByKosId(Kamar $kamar, string $kosId)
     {
-        $kamarData = $kamar->showByKosId($id);
+        $kamarData = $kamar->showByKosId($kosId);
 
         if ($kamarData->count() > 0) {
             return response()->json([

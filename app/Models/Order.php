@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
@@ -12,10 +14,14 @@ class Order extends Model
     protected $table = 'order';
 
     protected $fillable = [
-        'customer_id',
         'kamar_id',
         'tanggal_masuk',
         'durasi',
         'keterangan',
     ];
+
+    public function customer(): HasMany
+    {
+        return $this->hasMany(Customer::class);
+    }
 }

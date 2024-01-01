@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Kamar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,6 +29,11 @@ class Kos extends Model
         return $this->hasMany(Kamar::class);
     }
 
+    public function penjaga(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function store($data): object
     {
         return $this->create($data);
@@ -38,9 +44,15 @@ class Kos extends Model
         return $this->all();
     }
 
-    public function showById($id): object
+    public function showById($id): bool|object
     {
-        return $this->with('kamar')->where('id', $id)->first();
+        $kos = $this->with(['kamar.order.customer', 'penjaga'])->where('id', $id)->first();
+
+        if (!$kos) {
+            return false;
+        }
+
+        return $kos;
     }
 
     public function destroyById($id): bool

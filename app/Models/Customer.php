@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Customer extends Model
 {
@@ -12,6 +12,7 @@ class Customer extends Model
     protected $table = 'customer';
 
     protected $fillable = [
+        'order_id',
         'nama_customer',
         'telepon',
         'whatsapp',

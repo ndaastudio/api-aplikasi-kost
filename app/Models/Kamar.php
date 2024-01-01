@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Fasilitas;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Kamar extends Model
@@ -19,13 +19,8 @@ class Kamar extends Model
         'status',
     ];
 
-    public function fasilitas(): HasMany
+    public function order(): HasOne
     {
-        return $this->hasMany(Fasilitas::class);
-    }
-
-    public function showByKosId($kosId): object
-    {
-        return $this->where('kos_id', $kosId)->get();
+        return $this->hasOne(Order::class);
     }
 }
