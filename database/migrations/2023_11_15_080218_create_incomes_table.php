@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('tahun');
             $table->float('total');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

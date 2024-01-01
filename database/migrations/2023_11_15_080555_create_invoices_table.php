@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('jumlah');
             $table->string('bukti');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

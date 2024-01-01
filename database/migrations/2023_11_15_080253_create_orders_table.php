@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customer')->cascadeOnDelete();
             $table->foreignId('kamar_id')->constrained('kamar')->cascadeOnDelete();
             $table->dateTime('tanggal_masuk');
             $table->integer('durasi');
             $table->text('keterangan');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

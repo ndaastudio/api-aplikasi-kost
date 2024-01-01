@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('telepon')->nullable();
             $table->string('whatsapp')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

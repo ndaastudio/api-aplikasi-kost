@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('kelurahan');
             $table->integer('jumlah_kamar');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
