@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\auth\LoginRequest;
 use App\Http\Requests\auth\LogoutRequest;
-use App\Models\Identitas;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request, User $user, Identitas $identitas)
+    public function login(LoginRequest $request, User $user)
     {
         $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
 
@@ -25,17 +24,16 @@ class AuthController extends Controller
             ]);
         }
 
-        $isAuthenticate = $user->login($request->all());
+        $userData = $user->login($request->all());
 
-        if ($isAuthenticate) {
-            $userToken = $isAuthenticate->tokens()->where('name', $isAuthenticate->username)->first();
-            $userData = $identitas->showByUserId($isAuthenticate->id);
+        if ($userData) {
+            $userToken = $userData->tokens()->where('name', $userData->username)->first();
 
             if (!$userToken) {
-                $userToken = $isAuthenticate->createToken($isAuthenticate->username)->plainTextToken;
+                $userToken = $userData->createToken($userData->username)->plainTextToken;
             } else if ($userToken && $request->konfirmasi_login == 1) {
-                $isAuthenticate->tokens()->where('name', $isAuthenticate->username)->delete();
-                $userToken = $isAuthenticate->createToken($isAuthenticate->username)->plainTextToken;
+                $userData->tokens()->where('name', $userData->username)->delete();
+                $userToken = $userData->createToken($userData->username)->plainTextToken;
             } else {
                 return response()->json([
                     'status' => false,

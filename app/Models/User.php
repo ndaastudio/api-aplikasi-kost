@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function login($data): object|bool
     {
-        $user = $this->where('username', $data['username'])->first();
+        $user = $this->with('identitas')->where('username', $data['username'])->first();
 
         if ($user) {
             if (Hash::check($data['password'], $user->password)) {
