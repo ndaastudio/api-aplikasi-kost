@@ -33,17 +33,17 @@ class UserController extends Controller
         }
     }
 
-    public function getAll(Identitas $identitas)
+    public function getAll(User $user)
     {
-        $users = $identitas->showAllUser();
+        $userData = $user->showAll();
 
-        if ($users->count() > 0) {
+        if ($userData->count() > 0) {
             return response()->json([
                 'status' => true,
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $users,
+                'data' => $userData,
             ]);
         } else {
             return response()->json([
@@ -60,17 +60,17 @@ class UserController extends Controller
         ], 500);
     }
 
-    public function getById(Identitas $identitas, string $id)
+    public function getById(User $user, string $id)
     {
-        $user = $identitas->showByUserId($id);
+        $userData = $user->showById($id);
 
-        if ($user) {
+        if ($userData) {
             return response()->json([
                 'status' => true,
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $user,
+                'data' => $userData,
             ]);
         } else {
             return response()->json([

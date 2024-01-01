@@ -4,9 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Kos;
+use App\Models\Identitas;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -51,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Kos::class, 'kos_id');
     }
 
+    public function identitas(): HasOne
+    {
+        return $this->hasOne(Identitas::class, 'user_id');
+    }
+
     public function login($data): object|bool
     {
         $user = $this->where('username', $data['username'])->first();
@@ -91,5 +98,15 @@ class User extends Authenticatable
         $user->tokens()->where('name', $user->username)->delete();
 
         return $user->delete();
+    }
+
+    public function showAll(): object
+    {
+        return $this->with('identitas')->get();
+    }
+
+    public function showById($id): object
+    {
+        return $this->with('identitas')->where('id', $id)->first();
     }
 }
