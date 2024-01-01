@@ -4,10 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Identitas;
-use App\Models\Kamar;
 use App\Models\Kos;
+use App\Models\Kamar;
+use App\Models\Identitas;
 use Illuminate\Database\Seeder;
+use Database\Seeders\OrderSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,5 +29,11 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
 
         Identitas::factory(3)->create();
+
+        $this->call(KamarSeeder::class);
+
+        $this->call(OrderSeeder::class);
+
+        $this->call(CustomerSeeder::class);
     }
 }
