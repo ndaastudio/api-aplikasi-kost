@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Identitas>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
  */
-class IdentitasFactory extends Factory
+class CustomerFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +18,12 @@ class IdentitasFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->unique()->numberBetween(1, User::count()),
-            'nama' => $this->faker->name,
+            'order_id' => $this->faker->numberBetween(1, Order::count()),
+            'nama_customer' => $this->faker->name,
             'telepon' => $this->faker->phoneNumber,
             'whatsapp' => $this->faker->phoneNumber,
+            'pekerjaan' => $this->faker->jobTitle,
+            'ktp' => $this->faker->creditCardNumber,
         ];
     }
 }

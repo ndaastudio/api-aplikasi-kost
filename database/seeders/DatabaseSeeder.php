@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Customer;
 use App\Models\Kos;
+use App\Models\User;
 use App\Models\Kamar;
 use App\Models\Identitas;
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use Database\Seeders\OrderSeeder;
 
@@ -27,13 +30,12 @@ class DatabaseSeeder extends Seeder
         Kos::factory(5)->create();
 
         $this->call(UserSeeder::class);
+        Identitas::factory(User::count())->create();
 
-        Identitas::factory(3)->create();
+        Kamar::factory(10)->create();
 
-        $this->call(KamarSeeder::class);
+        Order::factory(10)->create();
 
-        $this->call(OrderSeeder::class);
-
-        $this->call(CustomerSeeder::class);
+        Customer::factory(20)->create();
     }
 }
