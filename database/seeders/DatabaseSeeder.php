@@ -9,6 +9,7 @@ use App\Models\Kos;
 use App\Models\User;
 use App\Models\Kamar;
 use App\Models\Identitas;
+use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Database\Seeder;
 use Database\Seeders\OrderSeeder;
@@ -37,5 +38,7 @@ class DatabaseSeeder extends Seeder
         Order::factory(10)->create();
 
         Customer::factory(20)->create();
+
+        Invoice::factory(10)->create();
     }
 }
