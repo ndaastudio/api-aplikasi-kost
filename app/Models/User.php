@@ -51,12 +51,12 @@ class User extends Authenticatable
 
     public function kos(): HasMany
     {
-        return $this->hasMany(Kos::class, 'kos_id');
+        return $this->hasMany(Kos::class);
     }
 
     public function identitas(): HasOne
     {
-        return $this->hasOne(Identitas::class, 'user_id');
+        return $this->hasOne(Identitas::class);
     }
 
     public function login($data): object|bool
