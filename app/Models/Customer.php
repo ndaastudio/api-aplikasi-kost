@@ -41,4 +41,9 @@ class Customer extends Model
     {
         return $this->with('order')->get();
     }
+
+    public function showById($id): object
+    {
+        return $this->with(['order.kamar.kos', 'order.invoice'])->where('id', $id)->get();
+    }
 }

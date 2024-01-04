@@ -59,4 +59,31 @@ class CustomerController extends Controller
             'message' => 'Terjadi kesalahan pada database atau server',
         ], 500);
     }
+
+    public function getById(Customer $customer, string $id)
+    {
+        $customerData = $customer->showById($id);
+
+        if ($customerData) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Data ditemukan',
+                ],
+                'data' => $customerData,
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Data tidak ditemukan',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
 }

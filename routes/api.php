@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/customers', [CustomerController::class, 'getAll']);
     Route::get('/customer/kos/{id}', [CustomerController::class, 'getByKosId']);
+    Route::get('/customer/{id}', [CustomerController::class, 'getById']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);
