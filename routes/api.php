@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\UserController;
 
@@ -37,6 +38,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/kos/{id}', [KosController::class, 'getById']);
     Route::post('/kos', [KosController::class, 'create']);
     Route::delete('/kos/{id}', [KosController::class, 'deleteById']);
+
+    Route::get('/customers', [CustomerController::class, 'getAll']);
+    Route::get('/customer/kos/{id}', [CustomerController::class, 'getByKosId']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Kos;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kamar extends Model
 {
@@ -20,8 +22,13 @@ class Kamar extends Model
         'status',
     ];
 
-    public function order(): HasOne
+    public function order(): HasMany
     {
-        return $this->hasOne(Order::class);
+        return $this->hasMany(Order::class);
+    }
+
+    public function kos(): BelongsTo
+    {
+        return $this->belongsTo(Kos::class);
     }
 }

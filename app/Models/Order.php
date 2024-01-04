@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Kamar;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -26,5 +28,10 @@ class Order extends Model
     public function customer(): HasMany
     {
         return $this->hasMany(Customer::class);
+    }
+
+    public function kamar(): BelongsTo
+    {
+        return $this->belongsTo(Kamar::class);
     }
 }
