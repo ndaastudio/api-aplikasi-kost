@@ -16,9 +16,11 @@ class Order extends Model
 
     protected $fillable = [
         'kamar_id',
+        'nomor_order',
         'tanggal_masuk',
         'durasi',
         'keterangan',
+        'status',
     ];
 
     public function customer(): HasMany
