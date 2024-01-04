@@ -19,8 +19,8 @@ class OrderFactory extends Factory
     {
         return [
             'kamar_id' => $this->faker->numberBetween(1, Kamar::count()),
-            'nomor_order' => $this->faker->unique()->numerify('ORD-###'),
-            'tanggal_masuk' => $this->faker->date(),
+            'nomor_order' => $this->faker->unique()->numerify('ORD/########/KG##/###'),
+            'tanggal_masuk' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'durasi' => $this->faker->numberBetween(1, 12),
             'keterangan' => $this->faker->sentence(4),
             'status' => $this->faker->numberBetween(0, 1),
