@@ -47,7 +47,7 @@ class Kos extends Model
 
     public function showById($id): bool|object
     {
-        $kos = $this->with(['kamar.order.customer', 'penjaga'])->where('id', $id)->first();
+        $kos = $this->with(['kamar.order.customer', 'penjaga.identitas'])->where('id', $id)->first();
 
         if (!$kos) {
             return false;
