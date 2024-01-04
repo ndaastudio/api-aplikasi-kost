@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -39,3 +40,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+
+// Route::post('/up-image', [InvoiceController::class, 'create']);
