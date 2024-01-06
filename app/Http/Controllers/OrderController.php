@@ -59,4 +59,31 @@ class OrderController extends Controller
             'message' => 'Terjadi kesalahan pada database atau server',
         ], 500);
     }
+
+    public function getByKosId(Order $order, string $id)
+    {
+        $orderData = $order->showByKosId($id);
+
+        if ($orderData->count() > 0) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Data ditemukan',
+                ],
+                'data' => $orderData
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Data tidak ditemukan',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
 }

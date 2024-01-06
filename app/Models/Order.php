@@ -50,4 +50,11 @@ class Order extends Model
     {
         return $this->with(['kamar.kos', 'customer', 'invoice'])->where('id', $id)->first();
     }
+
+    public function showByKosId($kosId): object
+    {
+        return $this->with(['kamar.kos', 'customer', 'invoice'])->whereHas('kamar.kos', function ($query) use ($kosId) {
+            $query->where('id', $kosId);
+        })->get();
+    }
 }
