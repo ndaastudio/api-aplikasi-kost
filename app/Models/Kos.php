@@ -45,15 +45,9 @@ class Kos extends Model
         return $this->all();
     }
 
-    public function showById($id): bool|object
+    public function showById($id): object|null
     {
-        $kos = $this->with(['kamar.order.customer', 'penjaga.identitas'])->where('id', $id)->first();
-
-        if (!$kos) {
-            return false;
-        }
-
-        return $kos;
+        return $this->with(['kamar.order.customer', 'penjaga.identitas'])->where('id', $id)->first();
     }
 
     public function destroyById($id): bool
@@ -64,6 +58,6 @@ class Kos extends Model
             return false;
         }
 
-        $kos->delete();
+        return $kos->delete();
     }
 }

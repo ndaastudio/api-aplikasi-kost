@@ -42,7 +42,7 @@ class Customer extends Model
         return $this->with('order')->get();
     }
 
-    public function showById($id): object
+    public function showById($id): object|null
     {
         return $this->with(['order.kamar.kos', 'order.invoice'])->where('id', $id)->first();
     }

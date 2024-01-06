@@ -106,7 +106,7 @@ class User extends Authenticatable
         return $this->with('identitas')->get();
     }
 
-    public function showById($id): object
+    public function showById($id): object|null
     {
         return $this->with('identitas')->where('id', $id)->first();
     }
