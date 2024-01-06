@@ -5,6 +5,8 @@ use App\Http\Controllers\KosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\KamarController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -42,6 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customers', [CustomerController::class, 'getAll']);
     Route::get('/customer/kos/{id}', [CustomerController::class, 'getByKosId']);
     Route::get('/customer/{id}', [CustomerController::class, 'getById']);
+
+    Route::get('/orders', [OrderController::class, 'getAll']);
+    Route::get('/order/{id}', [OrderController::class, 'getById']);
+
+    Route::get('/kamar/{id}', [KamarController::class, 'getById']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

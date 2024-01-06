@@ -40,4 +40,14 @@ class Order extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function showAll(): object
+    {
+        return $this->with(['kamar.kos', 'customer', 'invoice'])->get();
+    }
+
+    public function showById($id): object|null
+    {
+        return $this->with(['kamar.kos', 'customer', 'invoice'])->where('id', $id)->first();
+    }
 }
