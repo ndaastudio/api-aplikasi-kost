@@ -46,4 +46,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 
-// Route::post('/up-image', [InvoiceController::class, 'create']);
+Route::post('/up-image', [InvoiceController::class, 'create']);
