@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Customer;
+use App\Models\Fasilitas;
+use App\Models\FasilitasKamar;
 use App\Models\Kos;
 use App\Models\User;
 use App\Models\Kamar;
@@ -28,6 +30,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        Fasilitas::factory(10)->create();
+
         Kos::factory(5)->create();
 
         $this->call(UserSeeder::class);
@@ -36,6 +40,8 @@ class DatabaseSeeder extends Seeder
         Kamar::factory(10)->create();
 
         Order::factory(10)->create();
+
+        FasilitasKamar::factory(10)->create();
 
         Customer::factory(20)->create();
 

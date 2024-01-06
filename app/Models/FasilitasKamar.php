@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Fasilitas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FasilitasKamar extends Model
 {
@@ -18,4 +20,9 @@ class FasilitasKamar extends Model
         'jumlah',
         'keterangan',
     ];
+
+    public function fasilitas(): BelongsTo
+    {
+        return $this->belongsTo(Fasilitas::class);
+    }
 }
