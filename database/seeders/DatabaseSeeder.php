@@ -11,6 +11,7 @@ use App\Models\Kos;
 use App\Models\User;
 use App\Models\Kamar;
 use App\Models\Identitas;
+use App\Models\Income;
 use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Database\Seeder;
@@ -36,6 +37,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserSeeder::class);
         Identitas::factory(User::count())->create();
+
+        Income::factory(50)->create();
 
         Kamar::factory(10)->create();
 

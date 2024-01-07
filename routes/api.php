@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\OrderController;
@@ -52,6 +53,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/invoices', [InvoiceController::class, 'getAll']);
     Route::get('/invoices/kos', [InvoiceController::class, 'getByKosId']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'getById']);
+
+    Route::get('/incomes', [IncomeController::class, 'getAll']);
 
     Route::get('/kamar/{id}', [KamarController::class, 'getById']);
 });
