@@ -35,8 +35,8 @@ class InvoiceRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'order_id.required' => 'Order ID tidak boleh kosong',
-            'order_id.integer' => 'Order ID harus berupa angka',
+            'order_id.required' => 'ID Order tidak boleh kosong',
+            'order_id.integer' => 'ID Order harus berupa angka',
 
             'tanggal.required' => 'Tanggal tidak boleh kosong',
             'tanggal.date' => 'Tanggal harus berupa tanggal',
