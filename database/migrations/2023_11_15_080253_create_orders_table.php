@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nomor_order')->unique();
             $table->dateTime('tanggal_masuk');
             $table->integer('durasi');
-            $table->text('keterangan');
-            $table->integer('status');
+            $table->text('keterangan')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
