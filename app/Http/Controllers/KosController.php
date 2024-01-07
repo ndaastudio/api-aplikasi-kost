@@ -44,7 +44,8 @@ class KosController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $kosData
+                'data' => $kosData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([

@@ -16,7 +16,8 @@ class OrderController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $orderData
+                'data' => $orderData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([
@@ -43,7 +44,8 @@ class OrderController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $orderData
+                'data' => $orderData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([
@@ -71,7 +73,8 @@ class OrderController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $orderData
+                'data' => $orderData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([

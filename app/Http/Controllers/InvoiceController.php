@@ -40,7 +40,8 @@ class InvoiceController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $invoiceData
+                'data' => $invoiceData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([
@@ -67,7 +68,8 @@ class InvoiceController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $invoiceData
+                'data' => $invoiceData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([
@@ -95,7 +97,8 @@ class InvoiceController extends Controller
                 'message' => [
                     'success' => 'Data ditemukan',
                 ],
-                'data' => $invoiceData
+                'data' => $invoiceData,
+                'date_now' => date('Y-m-d')
             ]);
         } else {
             return response()->json([
