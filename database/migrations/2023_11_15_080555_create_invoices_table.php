@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('invoice', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('order')->cascadeOnDelete();
+            $table->string('nomor_invoice');
             $table->dateTime('tanggal');
             $table->integer('jumlah');
             $table->string('bukti');

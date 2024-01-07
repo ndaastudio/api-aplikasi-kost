@@ -18,6 +18,7 @@ class InvoiceFactory extends Factory
     {
         return [
             'order_id' => $this->faker->numberBetween(1, 10),
+            'nomor_invoice' => $this->faker->unique()->numerify('INV/########/KG##/###'),
             'tanggal' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'jumlah' => $this->faker->numberBetween(100000, 1000000),
             'bukti' => $this->faker->imageUrl(640, 480),
