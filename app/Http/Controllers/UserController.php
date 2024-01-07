@@ -12,6 +12,20 @@ class UserController extends Controller
 {
     public function create(UserRequest $request, User $user, Identitas $identitas)
     {
+        $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
+
+        if ($isAvailableUpdate) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'update' => 'Aplikasi telah tersedia dalam versi terbaru, silahkan update aplikasi Anda!',
+                ],
+                'data' => [
+                    'update_url' => env('APP_UPDATE_URL'),
+                ],
+            ]);
+        }
+
         try {
             DB::beginTransaction();
             $isCreatedUser = $user->register($request->all());
@@ -23,7 +37,7 @@ class UserController extends Controller
                 'message' => [
                     'success' => 'Akun berhasil dibuat',
                 ]
-            ]);
+            ], 201);
         } catch (\Throwable $th) {
             DB::rollback();
             return response()->json([

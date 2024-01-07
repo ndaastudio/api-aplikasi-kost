@@ -64,6 +64,20 @@ class KosController extends Controller
 
     public function create(KosRequest $request, Kos $kos)
     {
+        $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
+
+        if ($isAvailableUpdate) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'update' => 'Aplikasi telah tersedia dalam versi terbaru, silahkan update aplikasi Anda!',
+                ],
+                'data' => [
+                    'update_url' => env('APP_UPDATE_URL'),
+                ],
+            ]);
+        }
+
         $isCreatedKos = $kos->store($request->all());
 
         if ($isCreatedKos) {
@@ -72,7 +86,7 @@ class KosController extends Controller
                 'message' => [
                     'success' => 'Kos berhasil ditambahkan',
                 ]
-            ]);
+            ], 201);
         } else {
             return response()->json([
                 'status' => false,
