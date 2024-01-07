@@ -60,9 +60,10 @@ class OrderController extends Controller
         ], 500);
     }
 
-    public function getByKosId(Order $order, string $id)
+    public function getByKosId(Order $order)
     {
-        $orderData = $order->showByKosId($id);
+        $kosId = auth()->user()->kos_id;
+        $orderData = $order->showByKosId($kosId);
 
         if ($orderData->count() > 0) {
             return response()->json([

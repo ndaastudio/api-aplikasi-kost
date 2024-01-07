@@ -46,11 +46,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/customer/{id}', [CustomerController::class, 'getById']);
 
     Route::get('/orders', [OrderController::class, 'getAll']);
-    Route::get('/order/kos/{id}', [OrderController::class, 'getByKosId']);
+    Route::get('/orders/kos', [OrderController::class, 'getByKosId']);
     Route::get('/order/{id}', [OrderController::class, 'getById']);
 
     Route::get('/invoices', [InvoiceController::class, 'getAll']);
-    Route::get('/invoice/kos/{id}', [InvoiceController::class, 'getByKosId']);
+    Route::get('/invoices/kos', [InvoiceController::class, 'getByKosId']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'getById']);
 
     Route::get('/kamar/{id}', [KamarController::class, 'getById']);

@@ -84,9 +84,10 @@ class InvoiceController extends Controller
         ], 500);
     }
 
-    public function getByKosId(Invoice $invoice, string $id)
+    public function getByKosId(Invoice $invoice)
     {
-        $invoiceData = $invoice->showByKosId($id);
+        $kosId = auth()->user()->kos_id;
+        $invoiceData = $invoice->showByKosId($kosId);
 
         if ($invoiceData->count() > 0) {
             return response()->json([
