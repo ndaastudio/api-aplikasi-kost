@@ -5,7 +5,10 @@ namespace App\Models;
 use App\Models\Kamar;
 use App\Models\Invoice;
 use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -56,5 +59,46 @@ class Order extends Model
         return $this->with(['kamar.kos', 'customer', 'invoice'])->whereHas('kamar.kos', function ($query) use ($kosId) {
             $query->where('id', $kosId);
         })->get();
+    }
+
+    public function store($data): bool|object
+    {
+        try {
+            DB::beginTransaction();
+            $kostName = Kamar::with('kos')->where('id', $data['kamar_id'])->first()->kos->nama_kos;
+            $tmpKostCodeName = preg_replace('/\B\w/', '', $kostName);
+            $resultKostCodeName = preg_replace('/\s+/', '', ucwords($tmpKostCodeName));
+
+            $data['nomor_order'] = 'ORD/' . date('Ymd') . '/' . $resultKostCodeName . random_int(10, 99) . '/' . random_int(100, 999);
+            $customerData = $data['penghuni'];
+            $createdOrder = $this->create($data);
+
+            foreach ($customerData as $customer) {
+                $imgDecoded = base64_decode($customer['ktp']['base64String']);
+                $encryptedImgName = Crypt::encryptString($createdOrder->id, env('APP_KEY'));
+                $resultImgName = substr($encryptedImgName, 0, 50) . '.' . $customer['ktp']['format'];
+                $disk = Storage::build([
+                    'driver' => 'local',
+                    'root' => 'storage/KTP',
+                ]);
+                $disk->put($resultImgName, $imgDecoded);
+                $filePath = 'storage/KTP/' . $resultImgName;
+
+                Customer::create([
+                    'order_id' => $createdOrder->id,
+                    'nama_customer' => $customer['nama_customer'],
+                    'telepon' => $customer['telepon'],
+                    'whatsapp' => $customer['whatsapp'],
+                    'pekerjaan' => $customer['pekerjaan'],
+                    'ktp' => $filePath,
+                ]);
+            }
+            DB::commit();
+            return true;
+        } catch (\Throwable $th) {
+            DB::rollback();
+            dd($th->getMessage());
+            return false;
+        }
     }
 }
