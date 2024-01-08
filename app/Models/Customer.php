@@ -46,4 +46,9 @@ class Customer extends Model
     {
         return $this->with(['order.kamar.kos', 'order.invoice'])->where('id', $id)->first();
     }
+
+    public function store($data): bool|object
+    {
+        return $this->create($data);
+    }
 }
