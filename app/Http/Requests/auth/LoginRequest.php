@@ -46,8 +46,8 @@ class LoginRequest extends FormRequest
             'password.min' => 'Password minimal :min karakter',
             'password.max' => 'Password maksimal :max karakter',
 
-            'version.required' => 'Versi tidak boleh kosong',
-            'version.string' => 'Versi harus berupa string',
+            'version.required' => 'Versi aplikasi tidak boleh kosong',
+            'version.string' => 'Versi aplikasi harus berupa string',
 
             'konfirmasi_login.required' => 'Konfirmasi login tidak boleh kosong',
             'konfirmasi_login.integer' => 'Konfirmasi login harus berupa angka',

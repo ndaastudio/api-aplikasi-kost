@@ -57,8 +57,8 @@ class OrderRequest extends FormRequest
 
             'keterangan.string' => 'Keterangan harus berupa string',
 
-            'version.required' => 'Versi tidak boleh kosong',
-            'version.string' => 'Versi harus berupa string',
+            'version.required' => 'Versi aplikasi tidak boleh kosong',
+            'version.string' => 'Versi aplikasi harus berupa string',
 
             'penghuni.required' => 'Data penghuni tidak boleh kosong',
             'penghuni.array' => 'Data penghuni harus berupa array',
