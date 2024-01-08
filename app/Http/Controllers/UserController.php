@@ -26,25 +26,28 @@ class UserController extends Controller
             ]);
         }
 
-        try {
-            DB::beginTransaction();
-            $isCreatedUser = $user->register($request->all());
-            $identitas->store($isCreatedUser->id);
-            DB::commit();
+        $isCreatedUser = $user->store($request->all());
 
+        if ($isCreatedUser) {
             return response()->json([
                 'status' => true,
                 'message' => [
                     'success' => 'Akun berhasil dibuat',
                 ]
             ], 201);
-        } catch (\Throwable $th) {
-            DB::rollback();
+        } else {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage(),
-            ], 500);
+                'message' => [
+                    'error' => 'Akun gagal dibuat',
+                ]
+            ]);
         }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
     }
 
     public function getAll(User $user)

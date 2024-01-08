@@ -6,12 +6,13 @@ namespace App\Models;
 use App\Models\Kos;
 use App\Models\Identitas;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -79,13 +80,25 @@ class User extends Authenticatable
         return $user->tokens()->where('name', $user->username)->delete();
     }
 
-    public function register($data): object
+    public function store($data): bool
     {
-        return $this->create([
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'level' => $data['level'],
-        ]);
+        try {
+            DB::beginTransaction();
+            $identitas = new Identitas();
+
+            $createdUser = $this->create([
+                'username' => $data['username'],
+                'password' => Hash::make($data['password']),
+                'level' => $data['level'],
+            ]);
+
+            $identitas->store($createdUser->id);
+            DB::commit();
+            return true;
+        } catch (\Throwable) {
+            DB::rollback();
+            return false;
+        }
     }
 
     public function destroyById($id): bool
