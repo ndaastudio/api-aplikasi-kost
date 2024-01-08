@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    const KTP_PATH = 'storage/KTP';
+    const KTP_PATH = 'KTP';
 
     use HasFactory, SoftDeletes;
 
@@ -85,6 +85,7 @@ class Order extends Model
                 $disk = Storage::build([
                     'driver' => 'local',
                     'root' => $this::KTP_PATH,
+                    'visibility' => 'public'
                 ]);
                 $disk->put($resultImgName, $imgDecoded);
                 $filePath = $this::KTP_PATH . '/' . $resultImgName;

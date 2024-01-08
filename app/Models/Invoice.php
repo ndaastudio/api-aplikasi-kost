@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Invoice extends Model
 {
-    const BUKTI_PEMBAYARAN_PATH = 'storage/Bukti-Pembayaran';
+    const BUKTI_PEMBAYARAN_PATH = 'Bukti-Pembayaran';
 
     use HasFactory, SoftDeletes;
 
@@ -65,6 +65,7 @@ class Invoice extends Model
             $disk = Storage::build([
                 'driver' => 'local',
                 'root' => $this::BUKTI_PEMBAYARAN_PATH,
+                'visibility' => 'public'
             ]);
             $disk->put($resultImgName, $imgDecoded);
             $filePath = $this::BUKTI_PEMBAYARAN_PATH . '/' . $resultImgName;
