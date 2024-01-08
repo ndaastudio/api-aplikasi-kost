@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('order')->cascadeOnDelete();
             $table->string('nomor_invoice');
-            $table->dateTime('tanggal');
+            $table->date('tanggal');
             $table->integer('jumlah');
+            $table->integer('status')->default(0);
             $table->string('bukti');
             $table->timestamps();
             $table->softDeletes();

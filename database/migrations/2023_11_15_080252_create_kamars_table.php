@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kos_id')->constrained('kos')->cascadeOnDelete();
             $table->string('nama_kamar');
-            $table->integer('status');
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

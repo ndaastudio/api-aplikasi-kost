@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kamar_id')->constrained('kamar')->cascadeOnDelete();
             $table->string('nomor_order')->unique();
-            $table->dateTime('tanggal_masuk');
+            $table->date('tanggal_masuk');
             $table->integer('durasi');
             $table->text('keterangan')->nullable();
             $table->integer('status')->default(1);
