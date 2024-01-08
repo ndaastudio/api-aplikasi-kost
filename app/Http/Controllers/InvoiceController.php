@@ -7,9 +7,44 @@ use App\Models\Invoice;
 
 class InvoiceController extends Controller
 {
-    public function create(InvoiceRequest $request)
+    public function create(InvoiceRequest $request, Invoice $invoice)
     {
-        ///
+        $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
+
+        if ($isAvailableUpdate) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'update' => 'Aplikasi telah tersedia dalam versi terbaru, silahkan update aplikasi Anda!',
+                ],
+                'data' => [
+                    'update_url' => env('APP_UPDATE_URL'),
+                ],
+            ]);
+        }
+
+        $isCreatedInvoice = $invoice->store($request->all());
+
+        if ($isCreatedInvoice) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Invoice berhasil dibuat',
+                ]
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Invoice gagal dibuat',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
     }
 
     public function getAll(Invoice $invoice)

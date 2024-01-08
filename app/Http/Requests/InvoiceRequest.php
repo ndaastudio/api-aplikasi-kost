@@ -25,7 +25,10 @@ class InvoiceRequest extends FormRequest
             'order_id' => ['required', 'integer'],
             'tanggal' => ['required', 'date'],
             'jumlah' => ['required', 'integer'],
-            'bukti' => ['required'],
+            'bukti' => ['required', 'array'],
+            'bukti.base64String' => ['required', 'string'],
+            'bukti.format' => ['required', 'string', 'in:jpg,png'],
+            'version' => ['required', 'string']
         ];
     }
 
@@ -45,6 +48,17 @@ class InvoiceRequest extends FormRequest
             'jumlah.integer' => 'Jumlah harus berupa angka',
 
             'bukti.required' => 'Bukti tidak boleh kosong',
+            'bukti.array' => 'Bukti harus berupa object',
+
+            'bukti.base64String.required' => 'Bukti tidak boleh kosong',
+            'bukti.base64String.string' => 'Bukti harus berupa string',
+
+            'bukti.format.required' => 'Format bukti tidak boleh kosong',
+            'bukti.format.string' => 'Format bukti harus berupa string',
+            'bukti.format.in' => 'Format bukti harus berupa jpg atau png',
+
+            'version.required' => 'Versi aplikasi tidak boleh kosong',
+            'version.string' => 'Versi aplikasi harus berupa string',
         ];
     }
 }
