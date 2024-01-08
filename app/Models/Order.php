@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
+    const KTP_PATH = 'storage/KTP';
+
     use HasFactory, SoftDeletes;
 
     protected $table = 'order';
@@ -65,11 +67,14 @@ class Order extends Model
     {
         try {
             DB::beginTransaction();
+            $customerModel = new Customer();
+            $kamarModel = new Kamar();
+
             $kostName = Kamar::with('kos')->where('id', $data['kamar_id'])->first()->kos->nama_kos;
             $tmpKostCodeName = preg_replace('/\B\w/', '', $kostName);
             $resultKostCodeName = preg_replace('/\s+/', '', ucwords($tmpKostCodeName));
-
             $data['nomor_order'] = 'ORD/' . date('Ymd') . '/' . $resultKostCodeName . random_int(10, 99) . '/' . random_int(100, 999);
+
             $customerData = $data['penghuni'];
             $createdOrder = $this->create($data);
 
@@ -79,25 +84,22 @@ class Order extends Model
                 $resultImgName = substr($encryptedImgName, 0, 50) . '.' . $customer['ktp']['format'];
                 $disk = Storage::build([
                     'driver' => 'local',
-                    'root' => 'storage/KTP',
+                    'root' => $this::KTP_PATH,
                 ]);
                 $disk->put($resultImgName, $imgDecoded);
-                $filePath = 'storage/KTP/' . $resultImgName;
+                $filePath = $this::KTP_PATH . '/' . $resultImgName;
+                $fileUrl = asset($filePath);
 
-                Customer::create([
-                    'order_id' => $createdOrder->id,
-                    'nama_customer' => $customer['nama_customer'],
-                    'telepon' => $customer['telepon'],
-                    'whatsapp' => $customer['whatsapp'],
-                    'pekerjaan' => $customer['pekerjaan'],
-                    'ktp' => $filePath,
-                ]);
+                $customer['order_id'] = $createdOrder->id;
+                $customer['ktp'] = $fileUrl;
+                $customerModel->store($customer);
             }
+
+            $kamarModel->updateById($data['kamar_id'], ['status' => 1]);
             DB::commit();
             return true;
-        } catch (\Throwable $th) {
+        } catch (\Throwable) {
             DB::rollback();
-            dd($th->getMessage());
             return false;
         }
     }

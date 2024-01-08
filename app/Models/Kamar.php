@@ -42,4 +42,9 @@ class Kamar extends Model
     {
         return $this->with(['kos', 'order.customer', 'fasilitas.fasilitas'])->where('id', $id)->first();
     }
+
+    public function updateById($id, $data): bool
+    {
+        return $this->where('id', $id)->update($data);
+    }
 }
