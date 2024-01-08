@@ -29,6 +29,7 @@ class KosRequest extends FormRequest
             'kecamatan' => ['required', 'min:5', 'max:255'],
             'kelurahan' => ['required', 'min:5', 'max:255'],
             'jumlah_kamar' => ['required', 'integer'],
+            'version' => ['required', 'string'],
         ];
     }
 
@@ -62,6 +63,9 @@ class KosRequest extends FormRequest
 
             'jumlah_kamar.required' => 'Jumlah kamar tidak boleh kosong',
             'jumlah_kamar.integer' => 'Jumlah kamar harus berupa angka',
+
+            'version.required' => 'Versi aplikasi tidak boleh kosong',
+            'version.string' => 'Versi aplikasi harus berupa string',
         ];
     }
 }

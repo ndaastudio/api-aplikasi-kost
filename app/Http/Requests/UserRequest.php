@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'password' => ['required', 'min:8', 'max:16', 'confirmed'],
             'password_confirmation' => ['required', 'min:8', 'max:16', 'same:password'],
             'level' => ['required', 'integer', 'in:0,1'],
+            'version' => ['required', 'string'],
         ];
     }
 
@@ -56,6 +57,9 @@ class UserRequest extends FormRequest
             'level.required' => 'Level tidak boleh kosong',
             'level.integer' => 'Level harus berupa angka',
             'level.in' => 'Level hanya boleh 0 (Penjaga) atau 1 (Pemilik)',
+
+            'version.required' => 'Versi aplikasi tidak boleh kosong',
+            'version.string' => 'Versi aplikasi harus berupa string',
         ];
     }
 }
