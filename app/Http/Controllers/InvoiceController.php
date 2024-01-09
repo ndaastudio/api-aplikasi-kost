@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfirmInvoiceRequest;
 use App\Http\Requests\InvoiceRequest;
 use App\Models\Invoice;
 
@@ -122,6 +123,46 @@ class InvoiceController extends Controller
                 'status' => false,
                 'message' => [
                     'error' => 'Data tidak ditemukan',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
+
+    public function confirm(ConfirmInvoiceRequest $request, Invoice $invoice)
+    {
+        $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
+
+        if ($isAvailableUpdate) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'update' => 'Aplikasi telah tersedia dalam versi terbaru, silahkan update aplikasi Anda!',
+                ],
+                'data' => [
+                    'update_url' => env('APP_UPDATE_URL'),
+                ],
+            ]);
+        }
+
+        $isConfirmedInvoice = $invoice->confirm($request->all());
+
+        if ($isConfirmedInvoice) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Invoice berhasil diterima',
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Invoice gagal diterima',
                 ]
             ]);
         }

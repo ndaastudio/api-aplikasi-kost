@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/invoices/kos', [InvoiceController::class, 'getByKosId']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'getById']);
     Route::post('/invoice', [InvoiceController::class, 'create']);
+    Route::post('/invoice/confirm', [InvoiceController::class, 'confirm']);
 
     Route::get('/incomes', [IncomeController::class, 'getAll']);
 

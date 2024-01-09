@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Order;
+use App\Models\Income;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
@@ -73,6 +74,41 @@ class Invoice extends Model
             $data['bukti'] = $fileUrl;
 
             $this->create($data);
+            DB::commit();
+            return true;
+        } catch (\Throwable) {
+            DB::rollback();
+            return false;
+        }
+    }
+
+    public function confirm($data): bool
+    {
+        try {
+            DB::beginTransaction();
+            $incomeModel = new Income();
+            $invoice = $this->where('id', $data['invoice_id'])->first();
+            $invoiceMonth = date('m', strtotime($invoice->tanggal));
+            $invoiceYear = date('Y', strtotime($invoice->tanggal));
+
+            $invoice->update([
+                'status' => 1
+            ]);
+
+            $income = $incomeModel->where('kos_id', $data['kos_id'])->where('bulan', $invoiceMonth)->where('tahun', $invoiceYear)->first();
+
+            if ($income) {
+                $income->update([
+                    'total' => $income->total + $invoice->jumlah
+                ]);
+            } else {
+                $incomeModel->create([
+                    'kos_id' => $data['kos_id'],
+                    'bulan' => $invoiceMonth,
+                    'tahun' => $invoiceYear,
+                    'total' => $invoice->jumlah
+                ]);
+            }
             DB::commit();
             return true;
         } catch (\Throwable) {
