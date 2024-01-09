@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('kos_id')->constrained('kos')->cascadeOnDelete();
             $table->integer('bulan');
             $table->integer('tahun');
-            $table->float('total');
+            $table->float('total', 15, 2);
             $table->timestamps();
             $table->softDeletes();
         });
