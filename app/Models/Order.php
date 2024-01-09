@@ -104,4 +104,22 @@ class Order extends Model
             return false;
         }
     }
+
+    public function close($data): bool
+    {
+        try {
+            DB::beginTransaction();
+            $kamarModel = new Kamar();
+            $order = $this->where('id', $data['order_id'])->first();
+            $kamar = $kamarModel->where('id', $data['kamar_id'])->first();
+
+            $order->update(['status' => 1]);
+            $kamar->update(['status' => 0]);
+            DB::commit();
+            return true;
+        } catch (\Throwable) {
+            DB::rollback();
+            return false;
+        }
+    }
 }

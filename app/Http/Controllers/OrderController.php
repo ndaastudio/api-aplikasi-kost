@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CloseOrderRequest;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 
@@ -122,6 +123,46 @@ class OrderController extends Controller
                 'status' => false,
                 'message' => [
                     'error' => 'Order gagal dibuat',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
+
+    public function close(CloseOrderRequest $request, Order $order)
+    {
+        $isAvailableUpdate = version_compare($request->version, env('APP_VERSION'), '<');
+
+        if ($isAvailableUpdate) {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'update' => 'Aplikasi telah tersedia dalam versi terbaru, silahkan update aplikasi Anda!',
+                ],
+                'data' => [
+                    'update_url' => env('APP_UPDATE_URL'),
+                ],
+            ]);
+        }
+
+        $isClosedOrder = $order->close($request->all());
+
+        if ($isClosedOrder) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Order berhasil ditutup',
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Order gagal ditutup',
                 ]
             ]);
         }

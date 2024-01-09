@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/kos', [OrderController::class, 'getByKosId']);
     Route::get('/order/{id}', [OrderController::class, 'getById']);
     Route::post('/order', [OrderController::class, 'create']);
+    Route::post('/order/close', [OrderController::class, 'close']);
 
     Route::get('/invoices', [InvoiceController::class, 'getAll']);
     Route::get('/invoices/kos', [InvoiceController::class, 'getByKosId']);
