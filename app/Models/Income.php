@@ -26,7 +26,7 @@ class Income extends Model
         return $this->belongsTo(Kos::class);
     }
 
-    public function showAll()
+    public function showAll(): array
     {
         $sumIncomePerKos = $this->selectRaw('kos_id, sum(total) as total')
             ->groupBy('kos_id')
@@ -57,6 +57,83 @@ class Income extends Model
         $resultData = [
             'income_per_kos' => $resultIncomePerKos,
             'income_per_bulan' => $resultIncomePerMonth,
+        ];
+
+        return $resultData;
+    }
+
+    public function showByKosId($id): array
+    {
+        $sumIncomePerKosByKosId = $this->selectRaw('kos_id, sum(total) as total')
+            ->groupBy('kos_id')
+            ->where('kos_id', $id)
+            ->with('kos')
+            ->get();
+
+        $resultIncomePerKosByKosId = $sumIncomePerKosByKosId->map(function ($item) {
+            return [
+                'total' => $item['total'],
+                'kos' => $item['kos'],
+            ];
+        });
+
+        $sumIncomePerMonthByKosId = $this->selectRaw('bulan, tahun, sum(total) as total')
+            ->groupBy('bulan')
+            ->groupBy('tahun')
+            ->where('tahun', date('Y'))
+            ->where('kos_id', $id)
+            ->get();
+
+        $resultIncomePerMonthByKosId = $sumIncomePerMonthByKosId->map(function ($item) {
+            return [
+                'bulan' => $item['bulan'],
+                'tahun' => $item['tahun'],
+                'total' => $item['total'],
+            ];
+        });
+
+        $resultData = [
+            'data_kos' => $resultIncomePerKosByKosId,
+            'income_per_bulan' => $resultIncomePerMonthByKosId,
+        ];
+
+        return $resultData;
+    }
+
+    public function showByMonthYear($month, $year): array
+    {
+        $sumIncomePerMonthYear = $this->selectRaw('bulan, tahun, sum(total) as total')
+            ->groupBy('bulan')
+            ->groupBy('tahun')
+            ->where('bulan', $month)
+            ->where('tahun', $year)
+            ->get();
+
+        $resultIncomePerMonthYear = $sumIncomePerMonthYear->map(function ($item) {
+            return [
+                'bulan' => $item['bulan'],
+                'tahun' => $item['tahun'],
+                'total' => $item['total'],
+            ];
+        });
+
+        $sumIncomePerKosMonthYear = $this->selectRaw('kos_id, sum(total) as total')
+            ->groupBy('kos_id')
+            ->where('bulan', $month)
+            ->where('tahun', $year)
+            ->with('kos')
+            ->get();
+
+        $resultIncomePerKosMonthYear = $sumIncomePerKosMonthYear->map(function ($item) {
+            return [
+                'total' => $item['total'],
+                'kos' => $item['kos'],
+            ];
+        });
+
+        $resultData = [
+            'income_per_bulan_tahun' => $resultIncomePerMonthYear,
+            'income_kos_per_bulan_tahun' => $resultIncomePerKosMonthYear,
         ];
 
         return $resultData;
