@@ -34,7 +34,7 @@ class OrderRequest extends FormRequest
             'penghuni.*.whatsapp' => ['required', 'string', 'min:11', 'max:13'],
             'penghuni.*.ktp' => ['required', 'array'],
             'penghuni.*.ktp.base64String' => ['required', 'string'],
-            'penghuni.*.ktp.format' => ['required', 'string', 'in:jpg,png'],
+            'penghuni.*.ktp.format' => ['required', 'string', 'in:jpg,jpeg,png'],
         ];
     }
 
@@ -91,7 +91,7 @@ class OrderRequest extends FormRequest
 
             'penghuni.*.ktp.format.required' => 'Format foto KTP penghuni tidak boleh kosong',
             'penghuni.*.ktp.format.string' => 'Format foto KTP penghuni harus berupa string',
-            'penghuni.*.ktp.format.in' => 'Format foto KTP penghuni harus berupa jpg atau png',
+            'penghuni.*.ktp.format.in' => 'Format foto KTP penghuni harus berupa jpg, jpeg, atau png',
         ];
     }
 }

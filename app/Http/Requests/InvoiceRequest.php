@@ -27,7 +27,7 @@ class InvoiceRequest extends FormRequest
             'jumlah' => ['required', 'integer'],
             'bukti' => ['required', 'array'],
             'bukti.base64String' => ['required', 'string'],
-            'bukti.format' => ['required', 'string', 'in:jpg,png'],
+            'bukti.format' => ['required', 'string', 'in:jpg,jpeg,png'],
             'version' => ['required', 'string']
         ];
     }
@@ -55,7 +55,7 @@ class InvoiceRequest extends FormRequest
 
             'bukti.format.required' => 'Format bukti tidak boleh kosong',
             'bukti.format.string' => 'Format bukti harus berupa string',
-            'bukti.format.in' => 'Format bukti harus berupa jpg atau png',
+            'bukti.format.in' => 'Format bukti harus berupa jpg, jpeg, atau png',
 
             'version.required' => 'Versi aplikasi tidak boleh kosong',
             'version.string' => 'Versi aplikasi harus berupa string',
