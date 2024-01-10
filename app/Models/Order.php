@@ -113,7 +113,7 @@ class Order extends Model
             $order = $this->where('id', $data['order_id'])->first();
             $kamar = $kamarModel->where('id', $data['kamar_id'])->first();
 
-            $order->update(['status' => 1]);
+            $order->update(['status' => 0]);
             $kamar->update(['status' => 0]);
             DB::commit();
             return true;
