@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Kamar;
+use App\Scopes\KosScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +25,11 @@ class Kos extends Model
         'kelurahan',
         'jumlah_kamar',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new KosScope());
+    }
 
     public function kamar(): HasMany
     {

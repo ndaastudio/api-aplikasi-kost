@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kos;
 use App\Models\Order;
 use App\Models\FasilitasKamar;
+use App\Scopes\KamarScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,6 +23,11 @@ class Kamar extends Model
         'nama_kamar',
         'status',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new KamarScope());
+    }
 
     public function order(): HasMany
     {

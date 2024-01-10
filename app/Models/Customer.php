@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Order;
+use App\Scopes\CustomerScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,11 @@ class Customer extends Model
         'pekerjaan',
         'ktp',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new CustomerScope());
+    }
 
     public function order(): BelongsTo
     {

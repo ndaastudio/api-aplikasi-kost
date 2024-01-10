@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Order;
 use App\Models\Income;
+use App\Scopes\InvoiceScope;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,11 @@ class Invoice extends Model
         'status',
         'bukti',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new InvoiceScope());
+    }
 
     public function order(): BelongsTo
     {

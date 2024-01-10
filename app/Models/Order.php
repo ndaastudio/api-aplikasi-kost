@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Kamar;
 use App\Models\Invoice;
 use App\Models\Customer;
+use App\Scopes\OrderScope;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,11 @@ class Order extends Model
         'keterangan',
         'status',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new OrderScope());
+    }
 
     public function customer(): HasMany
     {
