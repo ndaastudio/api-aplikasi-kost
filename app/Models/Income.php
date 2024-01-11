@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Arr;
 
 class Income extends Model
 {
@@ -39,6 +40,10 @@ class Income extends Model
                 'kos' => $item['kos'],
             ];
         });
+        
+        $orderedResultIncomePerKos = array_values(Arr::sort($resultIncomePerKos, function (array $value) {
+            return $value['kos']['nama_kos'];
+        }));
 
         $sumIncomePerMonth = $this->selectRaw('bulan, tahun, sum(total) as total')
             ->groupBy('bulan')
@@ -55,7 +60,7 @@ class Income extends Model
         });
 
         $resultData = [
-            'income_per_kos' => $resultIncomePerKos,
+            'income_per_kos' => $orderedResultIncomePerKos,
             'income_per_bulan' => $resultIncomePerMonth,
         ];
 
@@ -130,10 +135,14 @@ class Income extends Model
                 'kos' => $item['kos'],
             ];
         });
+        
+        $orderedresultIncomePerKosMonthYear = array_values(Arr::sort($resultIncomePerKosMonthYear, function (array $value) {
+            return $value['kos']['nama_kos'];
+        }));
 
         $resultData = [
             'income_per_bulan_tahun' => $resultIncomePerMonthYear,
-            'income_kos_per_bulan_tahun' => $resultIncomePerKosMonthYear,
+            'income_kos_per_bulan_tahun' => $orderedresultIncomePerKosMonthYear,
         ];
 
         return $resultData;
