@@ -116,7 +116,10 @@ class User extends Authenticatable
 
     public function showAll(): object
     {
-        return $this->with('identitas')->get();
+        return $this->leftJoin('identitas', 'users.id', '=', 'identitas.user_id')
+            ->with('identitas')
+            ->orderBy('identitas.nama', 'asc')
+            ->get(['users.*']);
     }
 
     public function showById($id): object|null
