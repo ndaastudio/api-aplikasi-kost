@@ -172,4 +172,30 @@ class OrderController extends Controller
             'message' => 'Terjadi kesalahan pada database atau server',
         ], 500);
     }
+
+    public function deleteById(Order $order, string $id)
+    {
+        $isDeletedOrder = $order->destroyById($id);
+
+        if ($isDeletedOrder) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Order berhasil dihapus',
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Data tidak ditemukan',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
 }

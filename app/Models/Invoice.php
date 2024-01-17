@@ -122,4 +122,15 @@ class Invoice extends Model
             return false;
         }
     }
+
+    public function destroyById($id): bool
+    {
+        $invoice = $this->where('id', $id)->first();
+
+        if (!$invoice) {
+            return false;
+        }
+
+        return $invoice->delete();
+    }
 }

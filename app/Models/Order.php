@@ -128,4 +128,41 @@ class Order extends Model
             return false;
         }
     }
+
+    public function destroyById($id): bool
+    {
+        try {
+            DB::beginTransaction();
+            $kamarModel = new Kamar();
+            $customerModel = new Customer();
+            $invoiceModel = new Invoice();
+
+            $order = $this->where('id', $id)->first();
+
+            if (!$order) {
+                return false;
+            }
+
+            $kamar = $kamarModel->where('id', $order->kamar_id)->first();
+            $customers = $customerModel->where('order_id', $id)->get();
+            $invoices = $invoiceModel->where('order_id', $id)->get();
+
+            $kamar->update(['status' => 0]);
+
+            foreach ($customers as $customer) {
+                $customer->delete();
+            }
+
+            foreach ($invoices as $invoice) {
+                $invoice->delete();
+            }
+
+            $order->delete();
+            DB::commit();
+            return true;
+        } catch (\Throwable) {
+            DB::rollback();
+            return false;
+        }
+    }
 }

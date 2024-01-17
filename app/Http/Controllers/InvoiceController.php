@@ -172,4 +172,30 @@ class InvoiceController extends Controller
             'message' => 'Terjadi kesalahan pada database atau server',
         ], 500);
     }
+
+    public function deleteById(Invoice $invoice, string $id)
+    {
+        $isDeletedInvoice = $invoice->destroyById($id);
+
+        if ($isDeletedInvoice) {
+            return response()->json([
+                'status' => true,
+                'message' => [
+                    'success' => 'Invoice berhasil dihapus',
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => [
+                    'error' => 'Data tidak ditemukan',
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Terjadi kesalahan pada database atau server',
+        ], 500);
+    }
 }

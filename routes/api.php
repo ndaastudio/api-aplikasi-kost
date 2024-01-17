@@ -49,12 +49,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders', [OrderController::class, 'getAll']);
     Route::get('/orders/kos', [OrderController::class, 'getByKosId']);
     Route::get('/order/{id}', [OrderController::class, 'getById']);
+    Route::delete('/order/{id}', [OrderController::class, 'deleteById']);
     Route::post('/order', [OrderController::class, 'create']);
     Route::post('/order/close', [OrderController::class, 'close']);
 
     Route::get('/invoices', [InvoiceController::class, 'getAll']);
     Route::get('/invoices/kos', [InvoiceController::class, 'getByKosId']);
     Route::get('/invoice/{id}', [InvoiceController::class, 'getById']);
+    Route::delete('/invoice/{id}', [InvoiceController::class, 'deleteById']);
     Route::post('/invoice', [InvoiceController::class, 'create']);
     Route::post('/invoice/confirm', [InvoiceController::class, 'confirm']);
 
