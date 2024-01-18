@@ -4,18 +4,18 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Customer;
-use App\Models\Fasilitas;
-use App\Models\FasilitasKamar;
-use App\Models\Kos;
+// use App\Models\Customer;
+// use App\Models\Fasilitas;
+// use App\Models\FasilitasKamar;
+// use App\Models\Kos;
 use App\Models\User;
-use App\Models\Kamar;
+// use App\Models\Kamar;
 use App\Models\Identitas;
-use App\Models\Income;
-use App\Models\Invoice;
-use App\Models\Order;
+// use App\Models\Income;
+// use App\Models\Invoice;
+// use App\Models\Order;
 use Illuminate\Database\Seeder;
-use Database\Seeders\OrderSeeder;
+// use Database\Seeders\OrderSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,23 +31,23 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Fasilitas::factory(10)->create();
+        // Fasilitas::factory(10)->create();
 
-        Kos::factory(5)->create();
+        // Kos::factory(1)->create();
 
         $this->call(UserSeeder::class);
         Identitas::factory(User::count())->create();
 
-        Income::factory(50)->create();
+        // Income::factory(50)->create();
 
-        Kamar::factory(10)->create();
+        // Kamar::factory(10)->create();
 
-        Order::factory(10)->create();
+        // Order::factory(10)->create();
 
-        FasilitasKamar::factory(10)->create();
+        // FasilitasKamar::factory(10)->create();
 
-        Customer::factory(20)->create();
+        // Customer::factory(20)->create();
 
-        Invoice::factory(10)->create();
+        // Invoice::factory(10)->create();
     }
 }
