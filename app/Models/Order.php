@@ -79,7 +79,7 @@ class Order extends Model
             $kostName = Kamar::with('kos')->where('id', $data['kamar_id'])->first()->kos->nama_kos;
             $tmpKostCodeName = preg_replace('/\B\w/', '', $kostName);
             $resultKostCodeName = preg_replace('/\s+/', '', ucwords($tmpKostCodeName));
-            $data['nomor_order'] = 'ORD/' . date('Ymd') . '/' . $resultKostCodeName . random_int(10, 99) . '/' . random_int(100, 999);
+            $data['nomor_order'] = 'SEWA/' . date('Ymd') . '/' . $resultKostCodeName . random_int(10, 99) . '/' . random_int(100, 999);
 
             $customerData = $data['penghuni'];
             $createdOrder = $this->create($data);
